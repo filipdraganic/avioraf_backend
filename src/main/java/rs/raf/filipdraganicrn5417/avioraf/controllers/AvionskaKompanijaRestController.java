@@ -1,0 +1,59 @@
+package rs.raf.filipdraganicrn5417.avioraf.controllers;
+
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import rs.raf.filipdraganicrn5417.avioraf.model.AvionskaKompanija;
+import rs.raf.filipdraganicrn5417.avioraf.services.AvionskaKompanijaService;
+
+import javax.xml.ws.Response;
+import java.util.List;
+import java.util.Optional;
+
+@CrossOrigin
+@RestController
+@RequestMapping("/api/kompanije")
+public class AvionskaKompanijaRestController {
+
+    private final AvionskaKompanijaService avionskaKompanijaService;
+
+    public AvionskaKompanijaRestController(AvionskaKompanijaService avionskaKompanijaService) {
+        this.avionskaKompanijaService = avionskaKompanijaService;
+    }
+
+    @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<AvionskaKompanija> getAllAvionskaKompanija(){
+        return avionskaKompanijaService.findAll();
+    }
+
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getAvionskaKompanijaById(@RequestParam("kompanijaId") Long id){
+        Optional<AvionskaKompanija> optionalAvionskaKompanija = avionskaKompanijaService.findById(id);
+        if(optionalAvionskaKompanija.isPresent()){
+            return ResponseEntity.ok(optionalAvionskaKompanija.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public AvionskaKompanija createAvionskaKompanija(@RequestBody AvionskaKompanija avionskaKompanija){
+        return avionskaKompanijaService.save(avionskaKompanija);
+    }
+
+    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public AvionskaKompanija updateAvionskaKompanija(@RequestBody AvionskaKompanija avionskaKompanija){
+        return avionskaKompanijaService.save(avionskaKompanija);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<?> deleteAvionskaKompanija(@PathVariable("id")Long id){
+        avionskaKompanijaService.deleteById(id);
+        return ResponseEntity.ok().build();
+    }
+
+
+
+
+
+}
