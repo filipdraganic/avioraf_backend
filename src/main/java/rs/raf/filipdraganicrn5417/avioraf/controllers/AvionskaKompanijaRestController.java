@@ -10,6 +10,10 @@ import javax.xml.ws.Response;
 import java.util.List;
 import java.util.Optional;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.regex.Pattern;
+
 @CrossOrigin
 @RestController
 @RequestMapping("/api/kompanije")
@@ -37,9 +41,18 @@ public class AvionskaKompanijaRestController {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public AvionskaKompanija createAvionskaKompanija(@RequestBody AvionskaKompanija avionskaKompanija){
-        return avionskaKompanijaService.save(avionskaKompanija);
-    }
+    public ResponseEntity<AvionskaKompanija> createAvionskaKompanija(@RequestBody AvionskaKompanija avionskaKompanija){
+
+        String ime = avionskaKompanija.getName();
+        Pattern pattern = Pattern.compile("[a-zA-Z0-9]{2,}",Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(ime);
+        boolean matchFound = matcher.find();
+        if(matchFound){
+            return ResponseEntity.ok(avionskaKompanijaService.save(avionskaKompanija));
+        }else{
+            return ResponseEntity.notFound().build();
+        }
+        }
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public AvionskaKompanija updateAvionskaKompanija(@RequestBody AvionskaKompanija avionskaKompanija){

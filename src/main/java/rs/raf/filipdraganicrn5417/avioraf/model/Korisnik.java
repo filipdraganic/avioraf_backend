@@ -25,7 +25,7 @@ public class Korisnik {
     @Column(nullable = false)
     private UserType userType; //User ili Admin
 
-    @OneToMany(mappedBy = "korisnik", cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Rezervacija> bookings; //lista rezervacija (samo kod obicnog korisnika)
 
 
