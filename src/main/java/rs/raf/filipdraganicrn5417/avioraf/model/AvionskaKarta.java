@@ -11,7 +11,7 @@ public class AvionskaKarta {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id; //mora biti jedinstven, ne prikazuje se na frontendu
+    private long id; //mora biti jedinstven, ne prikazuje se na frontendu
 
     @ManyToOne
     @JoinColumn(name = "AvionskaKompanija_ID", referencedColumnName = "ID")
@@ -23,11 +23,11 @@ public class AvionskaKarta {
 
     private Date returnDate; //datum povratka (samo kod povratnih karata)
 
-    @OneToOne(cascade = CascadeType.DETACH)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "Let_ID", referencedColumnName = "ID")
     private Let let; //let za koji je karta vezana
 
-    private Long Count; //broj (>=0) dostupnih karata
+    private long Count; //broj (>=0) dostupnih karata
 
 
 

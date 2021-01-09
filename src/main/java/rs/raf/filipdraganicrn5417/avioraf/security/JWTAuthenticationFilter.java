@@ -16,6 +16,7 @@ import rs.raf.filipdraganicrn5417.avioraf.model.Korisnik;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import rs.raf.filipdraganicrn5417.avioraf.services.KorisnikService;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -32,6 +33,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     private AuthenticationManager authenticationManager;
 
+
     public JWTAuthenticationFilter(AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
 
@@ -46,8 +48,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         System.out.println("3");
         try{
             Korisnik creds = new ObjectMapper().readValue(req.getInputStream(), Korisnik.class);
-
-
+            System.out.println(creds.toString());
 
             return authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
@@ -73,8 +74,10 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .withExpiresAt(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .sign(Algorithm.HMAC512(SECRET.getBytes()));
 
-        String body = ((User) auth.getPrincipal()).getUsername() +  " " + token;
 
+        String body = "{\"username\":" + '"' + ((User) auth.getPrincipal()).getUsername() + '"' + ",\"JWT\" :" +  '"' + token + "\"}";
+
+        System.out.println(body);
         res.getWriter().write(body);
         res.getWriter().flush();
 

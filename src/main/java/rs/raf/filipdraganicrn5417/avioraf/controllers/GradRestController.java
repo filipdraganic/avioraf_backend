@@ -26,8 +26,8 @@ public class GradRestController {
         return gradService.findAll();
     }
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getGradById(@RequestParam("gradId") Long id){
+    @GetMapping(value = "{gradId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getGradById(@PathVariable("gradId") Long id){
 
         Optional<Grad> optionalGrad = gradService.findById(id);
         if(optionalGrad.isPresent()){

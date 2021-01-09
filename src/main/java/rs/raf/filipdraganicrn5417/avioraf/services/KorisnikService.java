@@ -32,6 +32,18 @@ public class KorisnikService implements IService<Korisnik, Long>{
         return (List<Korisnik>) korisnikRepository.findAll();
     }
 
+    public Optional<Korisnik> findByUsername(String username){
+        List<Korisnik> korisnikList = (List<Korisnik>) korisnikRepository.findAll();
+        Optional<Korisnik> optionalKorisnik = Optional.empty();
+        for(Korisnik korisnik : korisnikList){
+            if(korisnik.getUsername().equals(username)){
+                optionalKorisnik = Optional.of(korisnik);
+                return optionalKorisnik;
+            }
+        }
+        return optionalKorisnik;
+    }
+
     @Override
     public void deleteById(Long id) {
         korisnikRepository.deleteById(id);

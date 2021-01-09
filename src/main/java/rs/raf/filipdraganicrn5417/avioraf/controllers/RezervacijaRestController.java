@@ -25,8 +25,8 @@ public class RezervacijaRestController {
         return rezervacijaService.findAll();
     }
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getRezervacijaById(@RequestParam("rezervacijaId") Long id){
+    @GetMapping(value = "/{rezervacijaId}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getRezervacijaById(@PathVariable("rezervacijaId") Long id){
         Optional<Rezervacija> optionalRezervacija = rezervacijaService.findById(id);
         if(optionalRezervacija.isPresent()){
             return ResponseEntity.ok(optionalRezervacija.get());

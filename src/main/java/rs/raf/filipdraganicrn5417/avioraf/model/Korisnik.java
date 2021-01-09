@@ -14,7 +14,7 @@ public class Korisnik {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id; //mora biti jedinstven, ne prikazuje se na frontendu
+    private long id; //mora biti jedinstven, ne prikazuje se na frontendu
 
     @Column(unique = true, nullable = false)
     private String username; //mora biti jedinstven

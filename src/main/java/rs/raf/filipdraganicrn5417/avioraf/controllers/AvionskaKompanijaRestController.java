@@ -30,8 +30,8 @@ public class AvionskaKompanijaRestController {
         return avionskaKompanijaService.findAll();
     }
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getAvionskaKompanijaById(@RequestParam("kompanijaId") Long id){
+    @GetMapping(value = "{kompanijaId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getAvionskaKompanijaById(@PathVariable("kompanijaId") Long id){
         Optional<AvionskaKompanija> optionalAvionskaKompanija = avionskaKompanijaService.findById(id);
         if(optionalAvionskaKompanija.isPresent()){
             return ResponseEntity.ok(optionalAvionskaKompanija.get());

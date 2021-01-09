@@ -11,7 +11,7 @@ public class Let {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id; //mora biti jedinstven, ne prikazuje se na frontendu
+    private long id; //mora biti jedinstven, ne prikazuje se na frontendu
 
     @OneToMany
     private List<AvionskaKarta> avionskeKarte; //lista karta za ovaj let

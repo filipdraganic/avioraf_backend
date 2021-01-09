@@ -25,8 +25,8 @@ public class LetRestController {
         return letService.findAll();
     }
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getLetById(@RequestParam("letId") Long id){
+    @GetMapping(value = "{letId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getLetById(@PathVariable("letId") Long id){
         Optional<Let> optionalLet = letService.findById(id);
         if(optionalLet.isPresent()){
             return ResponseEntity.ok(optionalLet.get());

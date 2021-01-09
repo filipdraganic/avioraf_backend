@@ -10,7 +10,7 @@ public class Rezervacija {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id; //mora biti jedinstven, ne prikazuje se na frontendu
+    private long id; //mora biti jedinstven, ne prikazuje se na frontendu
 
     private boolean isAvaliable; //da li je rezervacija dostupna ili je istekla (ako je prosao datum polaska)
 

@@ -25,8 +25,8 @@ public class AvionskaKartaRestController {
     @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
     public List<AvionskaKarta> getAllAvionskaKarta(){ return avionskaKartaService.findAll();}
 
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getAvionskaKartaById(@RequestParam("kartaId") Long id){
+    @GetMapping(value="{kartaId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getAvionskaKartaById(@PathVariable("kartaId") Long id){
         Optional<AvionskaKarta> optionalAvionskaKarta = avionskaKartaService.findById(id);
         if(optionalAvionskaKarta.isPresent()){
             return ResponseEntity.ok(optionalAvionskaKarta.get());
