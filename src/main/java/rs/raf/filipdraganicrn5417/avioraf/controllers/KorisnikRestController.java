@@ -16,6 +16,7 @@ import java.util.Optional;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import javax.websocket.server.PathParam;
 import javax.xml.ws.Response;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -44,8 +45,11 @@ public class KorisnikRestController {
         return korisnikService.findAll();
     }
 
-    @GetMapping(value = "/{username}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Korisnik> getKorisnikByUsername(@PathVariable("username") String username){
+    @CrossOrigin
+    @GetMapping(value = "/username", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Korisnik> getKorisnikByUsername(@PathParam("username") String username){
+
+        System.out.println("Getting user by username");
         Optional<Korisnik> optionalKorisnik = korisnikService.findByUsername(username);
 
         System.out.println(optionalKorisnik.get());

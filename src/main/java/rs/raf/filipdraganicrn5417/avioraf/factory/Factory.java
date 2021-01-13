@@ -126,6 +126,7 @@ public class Factory implements CommandLineRunner {
                 let.setOrigin(getovaniGradoviIterator.next());
             }
 
+            letRepository.save(let);
         }
         System.out.println("Ummm... Flights loaded... I guess?");
         ////////////////////////
@@ -133,8 +134,8 @@ public class Factory implements CommandLineRunner {
         ////////////////////////
         while(odlaznidatumiIterator.hasNext() && povratnidatumiIterator.hasNext()){
             Random random = new Random();
-            long randomLet = random.nextInt(brojLetova-1);
-            long randomKompanija = random.nextInt(kompanije.length-1);
+            long randomLet = random.nextInt(brojLetova);
+            long randomKompanija = random.nextInt(kompanije.length);
             boolean randomBoolean = random.nextBoolean();
             long randomCount = random.nextInt(100);
 
@@ -142,9 +143,17 @@ public class Factory implements CommandLineRunner {
 
             Optional<AvionskaKompanija> izabranaKompanija = avionskaKompanijaRepository.findById(randomKompanija);
             izabranaKompanija.ifPresent(avionskaKarta::setAvionskaKompanija);
+            while(!izabranaKompanija.isPresent()){
+                randomKompanija = random.nextInt(kompanije.length);
+                izabranaKompanija = avionskaKompanijaRepository.findById(randomKompanija);
+                izabranaKompanija.ifPresent(avionskaKarta::setAvionskaKompanija);
 
+            }
+            System.out.println(izabranaKompanija);
             Optional<Let> izabranLet = letRepository.findById(randomLet);
             izabranLet.ifPresent(avionskaKarta::setLet);
+
+
 
             avionskaKarta.setOneway(randomBoolean);
             avionskaKarta.setCount(randomCount);
@@ -157,6 +166,7 @@ public class Factory implements CommandLineRunner {
                 odlaznidatumiIterator.next();
             }
 
+            avionskaKartaRepository.save(avionskaKarta);
         }
 
         System.out.println("Tickets loaded... or maybe...");

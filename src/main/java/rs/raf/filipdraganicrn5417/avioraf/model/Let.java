@@ -16,11 +16,11 @@ public class Let {
     @OneToMany
     private List<AvionskaKarta> avionskeKarte; //lista karta za ovaj let
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.DETACH})
     @JoinColumn(name = "Origin_Grad_ID", referencedColumnName = "ID")
     private Grad origin; //grad iz kog se polece
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = {CascadeType.DETACH} )
     @JoinColumn(name = "Destination_Grad_ID", referencedColumnName = "ID")
     private Grad destination; //grad u koji se putuje
 
