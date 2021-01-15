@@ -43,7 +43,7 @@ public class AvionskaKompanijaRestController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<AvionskaKompanija> createAvionskaKompanija(@RequestBody AvionskaKompanija avionskaKompanija){
 
-        String ime = avionskaKompanija.getName();
+        String ime = avionskaKompanija .getName();
         Pattern pattern = Pattern.compile("[a-zA-Z0-9]{2,}",Pattern.CASE_INSENSITIVE);
         Matcher matcher = pattern.matcher(ime);
         boolean matchFound = matcher.find();

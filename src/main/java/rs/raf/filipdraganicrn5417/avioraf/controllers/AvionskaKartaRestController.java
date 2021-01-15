@@ -8,6 +8,7 @@ import rs.raf.filipdraganicrn5417.avioraf.repositories.AvionskaKartaRepository;
 import rs.raf.filipdraganicrn5417.avioraf.services.AvionskaKartaService;
 
 import javax.print.attribute.standard.Media;
+import javax.websocket.server.PathParam;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,8 +28,8 @@ public class AvionskaKartaRestController {
         System.out.println(avionskaKartaService.findAll());
         return avionskaKartaService.findAll();}
 
-    @GetMapping(value="{kartaId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getAvionskaKartaById(@PathVariable("kartaId") Long id){
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getAvionskaKartaById(@PathParam("id") Long id){
         Optional<AvionskaKarta> optionalAvionskaKarta = avionskaKartaService.findById(id);
         if(optionalAvionskaKarta.isPresent()){
             return ResponseEntity.ok(optionalAvionskaKarta.get());
@@ -47,8 +48,10 @@ public class AvionskaKartaRestController {
         return avionskaKartaService.save(avionskaKarta);
     }
 
-    @DeleteMapping(value = "/{id}")
-    public ResponseEntity<?> deleteAvionskaKarta(@PathVariable("id") Long id){
+    @DeleteMapping()
+    public ResponseEntity<?> deleteAvionskaKarta(@PathParam("id") Long id){
+        System.out.println("Brisanje karte in progress");
+
         avionskaKartaService.deleteById(id);
         return ResponseEntity.ok().build();
     }

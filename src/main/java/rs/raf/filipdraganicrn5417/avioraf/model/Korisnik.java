@@ -3,13 +3,17 @@ package rs.raf.filipdraganicrn5417.avioraf.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
+@Table
 @Entity
+@Getter
+@Setter
 public class Korisnik {
 
     @Id

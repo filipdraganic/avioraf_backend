@@ -1,11 +1,16 @@
 package rs.raf.filipdraganicrn5417.avioraf.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
-@Data
+@Table
+@Getter
+@Setter
 public class Rezervacija {
 
     @Id
@@ -21,4 +26,11 @@ public class Rezervacija {
     @OneToOne
     @JoinColumn(name = "Avionska_Karta_ID", referencedColumnName = "ID")
     private AvionskaKarta avionskaKarta; // rezervisana karta
+
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name = "KORISNIK_ID", referencedColumnName = "ID")
+    private Korisnik korisnik; // Osoba koja je napravial rezervaciju
+
+
 }

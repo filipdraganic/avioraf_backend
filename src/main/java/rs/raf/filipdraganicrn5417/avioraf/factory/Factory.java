@@ -149,7 +149,7 @@ public class Factory implements CommandLineRunner {
                 izabranaKompanija.ifPresent(avionskaKarta::setAvionskaKompanija);
 
             }
-            System.out.println(izabranaKompanija);
+//            System.out.println(izabranaKompanija);
             Optional<Let> izabranLet = letRepository.findById(randomLet);
             izabranLet.ifPresent(avionskaKarta::setLet);
 
@@ -160,10 +160,10 @@ public class Factory implements CommandLineRunner {
 
             avionskaKarta.setDepartDate(dateformat.parse(odlaznidatumiIterator.next()));
 
-            if(randomBoolean){
-                avionskaKarta.setReturnDate(dateformat.parse(odlaznidatumiIterator.next()));
+            if(!randomBoolean){
+                avionskaKarta.setReturnDate(dateformat.parse(povratnidatumiIterator.next()));
             }else{
-                odlaznidatumiIterator.next();
+                povratnidatumiIterator.next();
             }
 
             avionskaKartaRepository.save(avionskaKarta);

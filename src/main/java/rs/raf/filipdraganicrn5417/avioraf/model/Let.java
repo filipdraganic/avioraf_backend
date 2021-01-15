@@ -1,19 +1,25 @@
 package rs.raf.filipdraganicrn5417.avioraf.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Data
+@Table
+@Getter
+@Setter
 public class Let {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id; //mora biti jedinstven, ne prikazuje se na frontendu
 
-    @OneToMany
+    @JsonIgnore
+    @OneToMany(mappedBy = "let", cascade = CascadeType.ALL)
     private List<AvionskaKarta> avionskeKarte; //lista karta za ovaj let
 
     @ManyToOne(cascade = {CascadeType.DETACH})
