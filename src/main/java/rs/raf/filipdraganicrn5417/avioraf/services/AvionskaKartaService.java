@@ -1,9 +1,13 @@
 package rs.raf.filipdraganicrn5417.avioraf.services;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import rs.raf.filipdraganicrn5417.avioraf.model.AvionskaKarta;
+import rs.raf.filipdraganicrn5417.avioraf.repositories.AvionskaKartaPaginationRepository;
 import rs.raf.filipdraganicrn5417.avioraf.repositories.AvionskaKartaRepository;
 
+import org.springframework.data.domain.Pageable;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,8 +16,11 @@ public class AvionskaKartaService implements IService<AvionskaKarta, Long> {
 
     private final AvionskaKartaRepository avionskaKartaRepository;
 
-    public AvionskaKartaService(AvionskaKartaRepository avionskaKartaRepository) {
+    private final AvionskaKartaPaginationRepository avionskaKartaPaginationRepository;
+
+    public AvionskaKartaService(AvionskaKartaRepository avionskaKartaRepository, AvionskaKartaPaginationRepository avionskaKartaPaginationRepository) {
         this.avionskaKartaRepository = avionskaKartaRepository;
+        this.avionskaKartaPaginationRepository = avionskaKartaPaginationRepository;
     }
 
     @Override
@@ -26,9 +33,10 @@ public class AvionskaKartaService implements IService<AvionskaKarta, Long> {
         return avionskaKartaRepository.findById(id);
     }
 
-    @Override
-    public List<AvionskaKarta> findAll() {
-        return (List<AvionskaKarta>) avionskaKartaRepository.findAll();
+
+    public Page<AvionskaKarta> findAll(int pageNumber, int size) {
+        Pageable page = PageRequest.of(pageNumber, size);
+        return avionskaKartaPaginationRepository.findAll(page);
     }
 
     @Override
@@ -36,4 +44,12 @@ public class AvionskaKartaService implements IService<AvionskaKarta, Long> {
         avionskaKartaRepository.deleteById(id);
 
     }
+
+    @Override
+    public List<AvionskaKarta> findAll(){
+        return (List<AvionskaKarta>) avionskaKartaRepository.findAll();
+    }
+
+
+
 }

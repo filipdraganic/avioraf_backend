@@ -6,8 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import rs.raf.filipdraganicrn5417.avioraf.model.Korisnik;
 import rs.raf.filipdraganicrn5417.avioraf.model.LoginForm;
-import rs.raf.filipdraganicrn5417.avioraf.model.Rezervacija;
 import rs.raf.filipdraganicrn5417.avioraf.model.UserType;
+import rs.raf.filipdraganicrn5417.avioraf.services.AvionskaKartaService;
 import rs.raf.filipdraganicrn5417.avioraf.services.KorisnikService;
 import rs.raf.filipdraganicrn5417.avioraf.services.RezervacijaService;
 
@@ -17,7 +17,6 @@ import java.util.Optional;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import javax.websocket.server.PathParam;
-import javax.xml.ws.Response;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -29,13 +28,15 @@ public class KorisnikRestController {
     private final String salt = "123";
     private final KorisnikService korisnikService;
     private final RezervacijaService rezervacijaService;
+    private final AvionskaKartaService avionskaKartaService;
 
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-    public KorisnikRestController(KorisnikService korisnikService, RezervacijaService rezervacijaService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public KorisnikRestController(KorisnikService korisnikService, AvionskaKartaService avionskaKartaService, RezervacijaService rezervacijaService, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.korisnikService = korisnikService;
         this.rezervacijaService = rezervacijaService;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
+        this.avionskaKartaService = avionskaKartaService;
     }
 
     @CrossOrigin
@@ -68,7 +69,7 @@ public class KorisnikRestController {
         }
     }
 
-    @PostMapping(value = "/login")
+    @PostMapping(value = "/login", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> loginKorisnik(@RequestBody LoginForm loginForm){
         System.out.println("Logged try");
         List<Korisnik> korisici = korisnikService.findAll();
@@ -125,28 +126,28 @@ public class KorisnikRestController {
     }
 
     @CrossOrigin
-    @DeleteMapping(value = "/{id}")
+    @DeleteMapping(value = "/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Korisnik> deleteKorisnik(@PathVariable("id") Long id){
         korisnikService.deleteById(id);
         return ResponseEntity.ok().build();
     }
 
-    @CrossOrigin
-    @PutMapping(value="/{korisnikId}/{bookingId}")
-    public ResponseEntity<Korisnik> addBooking(@PathVariable("korisnikId") Long korisnikId, @PathVariable("bookingId") Long bookingId){
-        Optional<Korisnik> korisnik = korisnikService.findById(korisnikId);
-        Optional<Rezervacija> booking = rezervacijaService.findById(bookingId);
 
-        if(korisnik.isPresent()){
-            if (booking.isPresent()){
-                korisnik.get().getBookings().add(booking.get());
-                return ResponseEntity.ok(korisnikService.save(korisnik.get()));
-            } else {
-                return ResponseEntity.notFound().build();
-            }
-        }else{
-            return ResponseEntity.notFound().build();
-        }
+    @PutMapping(value="/booking", produces = MediaType.APPLICATION_JSON_VALUE)
+    public void addBooking(@PathParam("korisnikId") Long korisnikId, @PathParam("bookingId") Long bookingId){
+        Optional<Korisnik> korisnik = korisnikService.findById(korisnikId);
+
+        System.out.println("AAAAAAAAAAAAAAAAAAAA");
+//        if(korisnik.isPresent()){
+//            if (booking.isPresent()){
+//                korisnik.get().getBookings().add(booking.get());
+//                return ResponseEntity.ok(korisnikService.save(korisnik.get()));
+//            } else {
+//                return ResponseEntity.notFound().build();
+//            }
+//        }else{
+//            return ResponseEntity.notFound().build();
+//        }
 
 
     }
