@@ -55,6 +55,13 @@ public class AvionskaKartaRestController {
         }
     }
 
+    @GetMapping(value =  "/avioKompanija", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getAvionskeKarteByAvionskaKompanija(@PathParam("avioKompanijaId") int avioKompanijaId){
+        List<AvionskaKarta> karte = avionskaKartaService.findAllByAvionskaKompanija((long)avioKompanijaId);
+
+        return new ResponseEntity<>(karte, HttpStatus.OK);
+    }
+
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public AvionskaKarta createAvionskaKarta(@RequestBody AvionskaKarta avionskaKarta){

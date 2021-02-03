@@ -50,6 +50,14 @@ public class AvionskaKartaService implements IService<AvionskaKarta, Long> {
         return (List<AvionskaKarta>) avionskaKartaRepository.findAll();
     }
 
+    public List<AvionskaKarta> findAllByAvionskaKompanija(Long id) {
+        return avionskaKartaRepository.findAlLByAvionskaKompanija_Id(id);
+    }
+
+    public void deleteByAvionskaKompanijaId(Long id){
+        avionskaKartaRepository.deleteAvionskaKartasByAvionskaKompanija_Id(id);
+
+    }
 
 
 }

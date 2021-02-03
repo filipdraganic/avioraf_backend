@@ -19,14 +19,14 @@ public class Let {
     private long id; //mora biti jedinstven, ne prikazuje se na frontendu
 
     @JsonIgnore
-    @OneToMany(mappedBy = "let", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "let")
     private List<AvionskaKarta> avionskeKarte; //lista karta za ovaj let
 
-    @ManyToOne(cascade = {CascadeType.DETACH})
+    @ManyToOne()
     @JoinColumn(name = "Origin_Grad_ID", referencedColumnName = "ID")
     private Grad origin; //grad iz kog se polece
 
-    @ManyToOne(cascade = {CascadeType.DETACH} )
+    @ManyToOne()
     @JoinColumn(name = "Destination_Grad_ID", referencedColumnName = "ID")
     private Grad destination; //grad u koji se putuje
 

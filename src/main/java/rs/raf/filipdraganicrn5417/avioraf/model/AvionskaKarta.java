@@ -3,6 +3,8 @@ package rs.raf.filipdraganicrn5417.avioraf.model;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -18,6 +20,7 @@ public class AvionskaKarta {
     private long id; //mora biti jedinstven, ne prikazuje se na frontendu
 
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "AvionskaKompanija_ID", referencedColumnName = "id")
     private AvionskaKompanija avionskaKompanija; //kompanija za koju je vezana karta
 

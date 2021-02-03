@@ -32,5 +32,7 @@ public class Korisnik {
     @OneToMany(cascade = CascadeType.ALL)
     private List<Rezervacija> bookings; //lista rezervacija (samo kod obicnog korisnika)
 
+    @Column(nullable = false)
+    private int noviKolacic = 1;
 
 }

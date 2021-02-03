@@ -1,6 +1,6 @@
 #FileLock
-#Tue Feb 02 03:17:05 CET 2021
+#Wed Feb 03 03:42:09 CET 2021
 hostName=DESKTOP-YEET167
-id=17760876a495e816320e4e902b19c41c4f4875a5a45
+id=17765c4bafa64bfdf69642bec09cdc1509614aecb75
 method=file
-server=192.168.0.12\:60756
+server=192.168.0.12\:50780

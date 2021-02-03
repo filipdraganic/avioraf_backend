@@ -22,4 +22,5 @@ public class AvionskaKompanija {
     private String name; //mora biti jedinstveno i mora se sastojati od alfanumerickih karaktera
 
 
+
 }

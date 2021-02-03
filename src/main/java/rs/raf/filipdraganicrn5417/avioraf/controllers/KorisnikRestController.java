@@ -152,4 +152,37 @@ public class KorisnikRestController {
 
     }
 
+    @PutMapping(value="/sifra", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> changePassword(@PathParam("password") String password,@PathParam("test")int test){
+        System.out.println("test");
+        System.out.println("test: " + test);
+//        System.out.println("KorisnikId : " + korisnikIdint);
+        System.out.println("test");
+        Optional<Korisnik> korisnikOptional = korisnikService.findById((long) test);
+        if(!korisnikOptional.isPresent()){
+            return ResponseEntity.status(400).body("Ne postoji korisnik sa zeljenim IDjem");
+        }
+
+        Korisnik korisnik = korisnikOptional.get();
+        korisnik.setNoviKolacic(0);
+        Pattern pattern = Pattern.compile("^(?=\\D*\\d)\\S{6,}$", Pattern.CASE_INSENSITIVE);
+        Matcher matcher = pattern.matcher(password);
+        boolean matchFound = matcher.find();
+
+        if(matchFound) {
+            korisnik.setPassword(bCryptPasswordEncoder.encode(password));
+
+            if (korisnik.getUserType() == UserType.ADMIN) {
+                korisnik.setBookings(null);
+            }
+
+            return ResponseEntity.ok(korisnikService.save(korisnik));
+        }else{
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Mora bolji password da bude");
+        }
+
+
+
+
+    }
 }

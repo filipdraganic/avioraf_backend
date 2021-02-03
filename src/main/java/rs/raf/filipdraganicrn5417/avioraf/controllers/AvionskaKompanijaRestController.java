@@ -1,17 +1,19 @@
 package rs.raf.filipdraganicrn5417.avioraf.controllers;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import rs.raf.filipdraganicrn5417.avioraf.model.AvionskaKompanija;
+import rs.raf.filipdraganicrn5417.avioraf.services.AvionskaKartaService;
 import rs.raf.filipdraganicrn5417.avioraf.services.AvionskaKompanijaService;
 
-import javax.xml.ws.Response;
 import java.util.List;
 import java.util.Optional;
 
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 import java.util.regex.Pattern;
 
 @CrossOrigin
@@ -21,8 +23,11 @@ public class AvionskaKompanijaRestController {
 
     private final AvionskaKompanijaService avionskaKompanijaService;
 
-    public AvionskaKompanijaRestController(AvionskaKompanijaService avionskaKompanijaService) {
+    private final AvionskaKartaService avionskaKartaService;
+
+    public AvionskaKompanijaRestController(AvionskaKompanijaService avionskaKompanijaService, AvionskaKartaService avionskaKartaService) {
         this.avionskaKompanijaService = avionskaKompanijaService;
+        this.avionskaKartaService = avionskaKartaService;
     }
 
     @GetMapping(value = "/all", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -30,7 +35,7 @@ public class AvionskaKompanijaRestController {
         return avionskaKompanijaService.findAll();
     }
 
-    @GetMapping(value = "{kompanijaId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/{kompanijaId}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> getAvionskaKompanijaById(@PathVariable("kompanijaId") Long id){
         Optional<AvionskaKompanija> optionalAvionskaKompanija = avionskaKompanijaService.findById(id);
         if(optionalAvionskaKompanija.isPresent()){
@@ -56,11 +61,15 @@ public class AvionskaKompanijaRestController {
 
     @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public AvionskaKompanija updateAvionskaKompanija(@RequestBody AvionskaKompanija avionskaKompanija){
+
         return avionskaKompanijaService.save(avionskaKompanija);
     }
 
     @DeleteMapping(value = "/{id}")
+    @Query(value = "DELETE FROM AvionskaKarta WHERE avionskaKompanija.id = :id ")
     public ResponseEntity<?> deleteAvionskaKompanija(@PathVariable("id")Long id){
+
+
         avionskaKompanijaService.deleteById(id);
         return ResponseEntity.ok().build();
     }
