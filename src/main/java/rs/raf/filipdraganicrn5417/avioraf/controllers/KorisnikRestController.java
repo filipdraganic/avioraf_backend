@@ -47,15 +47,17 @@ public class KorisnikRestController {
     }
 
     @CrossOrigin
-    @GetMapping(value = "/username", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Korisnik> getKorisnikByUsername(@PathParam("username") String username){
+    @GetMapping(value = "/id", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Korisnik> getKorisnikByUsername(@PathParam("id") Long id){
 
         System.out.println("Getting user by username");
-        Optional<Korisnik> optionalKorisnik = korisnikService.findByUsername(username);
+        Optional<Korisnik> optionalKorisnik = korisnikService.findById(id);
 
         System.out.println(optionalKorisnik.get());
 
-        return optionalKorisnik.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        Korisnik korisnik = optionalKorisnik.get();
+
+        return ResponseEntity.ok(korisnik);
     }
 
     @CrossOrigin
@@ -181,8 +183,12 @@ public class KorisnikRestController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Mora bolji password da bude");
         }
 
-
-
-
     }
+
+    @CrossOrigin
+    @GetMapping("/isAuthenticated")ResponseEntity<?> isAuthenticated(){
+        return new ResponseEntity<>("OK", HttpStatus.OK);
+    }
+
+
 }

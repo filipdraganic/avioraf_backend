@@ -39,6 +39,21 @@ public class AvionskaKarta {
 
     private long Count; //broj (>=0) dostupnih karata
 
+    @Override
+    public String toString() {
+        return "AvionskaKarta{" +
+                "id=" + id +
+                ", avionskaKompanija=" + avionskaKompanija +
+                ", oneway=" + oneway +
+                ", departDate=" + departDate +
+                ", returnDate=" + returnDate +
+//                ", let=" + let +
+                ", Count=" + Count +
+                '}';
+    }
+
+
+
 
 
 }

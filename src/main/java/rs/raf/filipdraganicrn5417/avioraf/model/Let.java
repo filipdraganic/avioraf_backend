@@ -31,5 +31,13 @@ public class Let {
     private Grad destination; //grad u koji se putuje
 
 
-
+    @Override
+    public String toString() {
+        return "Let{" +
+                "id=" + id +
+                ", avionskeKarte=" + avionskeKarte +
+                ", origin=" + origin +
+                ", destination=" + destination +
+                '}';
+    }
 }

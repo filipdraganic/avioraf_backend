@@ -2,6 +2,7 @@ package rs.raf.filipdraganicrn5417.avioraf.services;
 
 import org.springframework.stereotype.Service;
 import rs.raf.filipdraganicrn5417.avioraf.model.Korisnik;
+import rs.raf.filipdraganicrn5417.avioraf.model.Rezervacija;
 import rs.raf.filipdraganicrn5417.avioraf.repositories.KorisnikRepository;
 
 import java.util.List;
@@ -47,5 +48,39 @@ public class KorisnikService implements IService<Korisnik, Long>{
     @Override
     public void deleteById(Long id) {
         korisnikRepository.deleteById(id);
+    }
+
+    public void removeRezervacija(Rezervacija rezervacija){
+        Optional<Korisnik> optionalKorisnik = korisnikRepository.findById(rezervacija.getKorisnik().getId());
+        if(optionalKorisnik.isPresent()){
+            Korisnik korisnik = optionalKorisnik.get();
+            korisnik.getBookings().remove(rezervacija);
+            korisnikRepository.save(korisnik);
+        }
+
+
+    }
+
+    public boolean addRezervacija(Rezervacija rezervacija){
+
+        Optional<Korisnik> optionalKorisnik = korisnikRepository.findById(rezervacija.getKorisnik().getId());
+        if(optionalKorisnik.isPresent()){
+            Korisnik luckyKorisnik = optionalKorisnik.get();
+            List<Rezervacija> tempRezervacije = luckyKorisnik.getBookings();
+            for (Rezervacija tempRezervacija : tempRezervacije){
+                if(tempRezervacija.getId() == rezervacija.getId()){
+                    return false;
+                }
+            }
+            System.out.println("Dodavanje rezervacije");
+            tempRezervacije.add(rezervacija);
+            luckyKorisnik.setBookings(tempRezervacije);
+            System.out.println(luckyKorisnik.getBookings());
+            korisnikRepository.save(luckyKorisnik);
+            System.out.println("Sacuvan korisnik");
+            return true;
+        }
+
+        return false;
     }
 }

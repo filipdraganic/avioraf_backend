@@ -1,7 +1,6 @@
 package rs.raf.filipdraganicrn5417.avioraf.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.sun.istack.NotNull;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,10 +28,20 @@ public class Korisnik {
     @Column(nullable = false)
     private UserType userType; //User ili Admin
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "korisnik")
     private List<Rezervacija> bookings; //lista rezervacija (samo kod obicnog korisnika)
 
     @Column(nullable = false)
     private int noviKolacic = 1;
 
+    @Override
+    public String toString() {
+        return "Korisnik{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", userType=" + userType +
+                ", noviKolacic=" + noviKolacic +
+                '}';
+    }
 }

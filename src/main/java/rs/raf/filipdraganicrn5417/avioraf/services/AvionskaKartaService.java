@@ -18,9 +18,12 @@ public class AvionskaKartaService implements IService<AvionskaKarta, Long> {
 
     private final AvionskaKartaPaginationRepository avionskaKartaPaginationRepository;
 
-    public AvionskaKartaService(AvionskaKartaRepository avionskaKartaRepository, AvionskaKartaPaginationRepository avionskaKartaPaginationRepository) {
+    private final RezervacijaService rezervacijaService;
+
+    public AvionskaKartaService(AvionskaKartaRepository avionskaKartaRepository, AvionskaKartaPaginationRepository avionskaKartaPaginationRepository, RezervacijaService rezervacijaService) {
         this.avionskaKartaRepository = avionskaKartaRepository;
         this.avionskaKartaPaginationRepository = avionskaKartaPaginationRepository;
+        this.rezervacijaService = rezervacijaService;
     }
 
     @Override
@@ -57,6 +60,17 @@ public class AvionskaKartaService implements IService<AvionskaKarta, Long> {
     public void deleteByAvionskaKompanijaId(Long id){
         avionskaKartaRepository.deleteAvionskaKartasByAvionskaKompanija_Id(id);
 
+    }
+
+    public void reduceCount(AvionskaKarta karta, int amount){
+        karta.setCount(karta.getCount() - amount);
+
+        if(karta.getCount() == 0){
+            rezervacijaService.deleteByKartaId(karta.getId());
+            avionskaKartaRepository.deleteById(karta.getId());
+        }else{
+            avionskaKartaRepository.save(karta);
+        }
     }
 
 

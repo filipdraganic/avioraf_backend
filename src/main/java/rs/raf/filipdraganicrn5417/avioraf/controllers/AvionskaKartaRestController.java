@@ -30,14 +30,14 @@ public class AvionskaKartaRestController {
 //        System.out.println(currentPage);
         if (currentPage == null) currentPage = 1;
 
-        System.out.println("Current Page: " + currentPage);
-
+//        System.out.println("Current Page: " + currentPage);
+//
         PageDTO pageDTO = new PageDTO();
 
-
-        System.out.println(avionskaKartaService.findAll(currentPage-1,5));
-        System.out.println(avionskaKartaService.findAll(currentPage-1, 5).toList());
-
+//
+//        System.out.println(avionskaKartaService.findAll(currentPage-1,5));
+//        System.out.println(avionskaKartaService.findAll(currentPage-1, 5).toList());
+//
 
         pageDTO.setAvionskaKartaList(avionskaKartaService.findAll(currentPage-1,5).toList());
         pageDTO.setSize(avionskaKartaService.findAll().size());

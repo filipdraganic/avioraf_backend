@@ -7,6 +7,9 @@ import org.springframework.stereotype.Component;
 import rs.raf.filipdraganicrn5417.avioraf.model.*;
 import rs.raf.filipdraganicrn5417.avioraf.repositories.*;
 
+
+import javax.persistence.Persistence;
+import javax.persistence.PersistenceContext;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.Callable;
@@ -21,6 +24,7 @@ public class Factory implements CommandLineRunner {
     private final RezervacijaRepository rezervacijaRepository;
     private final GradRepository gradRepository;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
+
 
     public Factory(AvionskaKartaRepository avionskaKartaRepository, AvionskaKompanijaRepository avionskaKompanijaRepository, KorisnikRepository korisnikRepository, LetRepository letRepository, RezervacijaRepository rezervacijaRepository, GradRepository gradRepository, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.avionskaKartaRepository = avionskaKartaRepository;
@@ -43,8 +47,8 @@ public class Factory implements CommandLineRunner {
         String[] sifre = {"petar123", "metar123", "vetar123", "patka123"};
         String[] kompanije = {"AvioDenon", "AvioYamaha", "AvioMarantz"};
         String[] gradovi = {"Rejkavik", "Koupavorig", "Habnarfjerdir", "Akirejri", "Rejkjanesbajr"};
-        String[] odlazniDatumi = {"22-10-2010", "21-10-2010", "20-10-2010", "23-10-2010", "24-10-2010", "25-10-2010", "26-10-2010", "27-10-2010", "28-10-2010", "29-10-2010"};
-        String[] povratniDatumi = {"01-11-2010", "02-11-2010", "03-11-2010", "04-11-2010", "05-11-2010", "06-11-2010", "07-11-2010", "08-11-2010", "09-11-2010", "10-11-2010"};
+        String[] odlazniDatumi = {"22-10-2010", "21-10-2010", "20-10-2010", "23-10-2010", "24-10-2010", "25-10-2010", "26-10-2010", "27-10-2010", "28-10-2022", "29-10-2022"};
+        String[] povratniDatumi = {"01-11-2010", "02-11-2010", "03-11-2010", "04-11-2010", "05-11-2010", "06-11-2010", "07-11-2010", "08-11-2010", "09-11-2022", "10-11-2022"};
 
         Iterator<String> usernamesIterator = Arrays.stream(usernames).iterator();
         Iterator<String> passwordIterator = Arrays.stream(sifre).iterator();
@@ -156,7 +160,7 @@ public class Factory implements CommandLineRunner {
 
 
             avionskaKarta.setOneway(randomBoolean);
-            avionskaKarta.setCount(randomCount);
+            avionskaKarta.setCount(randomCount+1);
 
             avionskaKarta.setDepartDate(dateformat.parse(odlaznidatumiIterator.next()));
 
