@@ -45,10 +45,23 @@ public class KorisnikRestController {
         System.out.println("Get all??");
         return korisnikService.findAll();
     }
+    @CrossOrigin
+    @GetMapping(value = "/username", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Korisnik> getKorisnikByUsername(@PathParam("username") String username){
+
+        System.out.println("Getting user by username");
+        Optional<Korisnik> optionalKorisnik = korisnikService.findByUsername(username);
+
+        System.out.println(optionalKorisnik.get());
+
+        Korisnik korisnik = optionalKorisnik.get();
+
+        return ResponseEntity.ok(korisnik);
+    }
 
     @CrossOrigin
     @GetMapping(value = "/id", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Korisnik> getKorisnikByUsername(@PathParam("id") Long id){
+    public ResponseEntity<Korisnik> getKorisnikByIdParam(@PathParam("id") Long id){
 
         System.out.println("Getting user by username");
         Optional<Korisnik> optionalKorisnik = korisnikService.findById(id);
